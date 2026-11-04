@@ -1,0 +1,69 @@
+# ---------------------------------------------------------------
+# GridMind .gitignore (Python / FastAPI / PyTorch / JavaScript)
+# Trained models (models/*.pth), the dataset (data/dataset.npz) and
+# saved results/plots/reports are intentionally committed: they are
+# small (< 2 MB each) and needed to run the dashboard without retraining.
+# ---------------------------------------------------------------
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Packaging / build output
+build/
+dist/
+*.egg-info/
+
+# Secrets and environment files
+.env
+.env.*
+*.pem
+*.key
+secrets.*
+credentials.*
+
+# Runtime logs (one JSON trajectory is written per restoration run)
+results/logs/
+*.log
+
+# Temporary and archive files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+*.zip
+~$*
+
+# IDE / editor settings and caches
+.vscode/
+.idea/
+.claude/
+*.code-workspace
+
+# Jupyter
+.ipynb_checkpoints/
+
+# JavaScript tooling (not used by the bundled frontend, kept for safety)
+node_modules/
+.npm/
+.parcel-cache/
+
+# OS-specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

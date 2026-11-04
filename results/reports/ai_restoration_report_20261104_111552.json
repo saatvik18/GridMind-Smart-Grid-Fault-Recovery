@@ -1,0 +1,55 @@
+{
+  "model": "llama3.2",
+  "report": {
+    "fault_explanation": "Voltage sag detected in section S3 due to industrial load imbalance.",
+    "possible_causes": [
+      "Industrial Load Imbalance",
+      "Line Congestion"
+    ],
+    "dqn_action_justification": "DQN chose RECONNECT HEALTHY SECTION as it prioritizes maintaining a radial network structure and minimizing restoration time. However, this action may not directly address the root cause of the voltage sag.",
+    "safety_considerations": [
+      "Section 5 reconnection via switch S1-S5 ensures network stability",
+      "No overload detected in any section"
+    ],
+    "recommended_restoration_sequence": [
+      "step 2: RECONNECT SECTION S3 (industrial load) with priority",
+      "step 3: RECONNECT HEALTHY SECTION (if necessary)",
+      "step 4: RECONNECTION COMPLETE"
+    ],
+    "grid_condition_summary": "Voltage sag in S3, radial network maintained, no overload detected."
+  },
+  "raw_response": "{\"fault_explanation\": \"Voltage sag detected in section S3 due to industrial load imbalance.\", \"possible_causes\": [\"Industrial Load Imbalance\", \"Line Congestion\"], \"dqn_action_justification\": \"DQN chose RECONNECT HEALTHY SECTION as it prioritizes maintaining a radial network structure and minimizing restoration time. However, this action may not directly address the root cause of the voltage sag.\", \"safety_considerations\": [\"Section 5 reconnection via switch S1-S5 ensures network stability\", \"No overload detected in any section\"], \"recommended_restoration_sequence\": [\"step 2: RECONNECT SECTION S3 (industrial load) with priority\", \"step 3: RECONNECT HEALTHY SECTION (if necessary)\", \"step 4: RECONNECTION COMPLETE\"], \"grid_condition_summary\": \"Voltage sag in S3, radial network maintained, no overload detected.\"}",
+  "json_parsed": true,
+  "latency_s": 101.5,
+  "eval_tokens": 183,
+  "context": {
+    "fault_class": "Voltage Sag",
+    "cnn_confidence": 0.9997332692146301,
+    "probabilities": {
+      "Normal": 0.0002,
+      "Voltage Sag": 0.9997,
+      "Overload": 0.0001,
+      "Fault": 0.0
+    },
+    "voltage_status": "Sag (min 143.8 V RMS, 0.63 pu)",
+    "current_status": "Normal (max 9.9 A RMS, 0.99 pu)",
+    "frequency_status": "Normal (range 49.96-50.03 Hz)",
+    "affected_section": "S3 (Industrial Load)",
+    "network_status": [
+      "S1 Main Source: connected",
+      "S2 Residential Load: connected",
+      "S3 Industrial Load: connected",
+      "S4 Commercial Load: connected",
+      "S5 Critical Load: connected"
+    ],
+    "dqn_actions": [
+      "step 1: RECONNECT HEALTHY SECTION"
+    ],
+    "safety_results": [
+      "step 1: APPROVED - Section 5 reconnected via switch S1-S5; network stays radial"
+    ],
+    "restoration_progress": 1.0,
+    "served_load": 1.0
+  },
+  "generated_at": "2026-11-04 11:15:52"
+}

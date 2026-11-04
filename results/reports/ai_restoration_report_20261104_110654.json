@@ -1,0 +1,53 @@
+{
+  "model": "llama3.2",
+  "report": {
+    "fault_explanation": "Overload detected in S3 due to high industrial load, causing voltage deviation and frequency instability.",
+    "possible_causes": [
+      "High demand",
+      "Faulty equipment"
+    ],
+    "dqn_action_justification": "DQN chose ISOLATE FAULTY SECTION and RECONNECT HEALTHY SECTION based on CNN confidence (99.8%) and network section status, ensuring safe isolation of the faulty S3 and restoration of healthy sections.",
+    "safety_considerations": [
+      "No voltage drop expected after isolation",
+      "Reconnection sequence prioritizes healthy sections to minimize load shedding"
+    ],
+    "recommended_restoration_sequence": [
+      "step 1: ISOLATE FAULTY SECTION",
+      "step 2: RECONNECT HEALTHY SECTION S4",
+      "step 3: RECONNECT HEALTHY SECTION S5"
+    ],
+    "grid_condition_summary": "Grid condition: Overload in S3, Normal voltage and frequency, 100% restoration progress, 64.0% served load."
+  },
+  "raw_response": "{\"fault_explanation\": \"Overload detected in S3 due to high industrial load, causing voltage deviation and frequency instability.\", \"possible_causes\": [\"High demand\", \"Faulty equipment\"], \"dqn_action_justification\": \"DQN chose ISOLATE FAULTY SECTION and RECONNECT HEALTHY SECTION based on CNN confidence (99.8%) and network section status, ensuring safe isolation of the faulty S3 and restoration of healthy sections.\", \"safety_considerations\": [\"No voltage drop expected after isolation\", \"Reconnection sequence prioritizes healthy sections to minimize load shedding\"], \"recommended_restoration_sequence\": [\"step 1: ISOLATE FAULTY SECTION\", \"step 2: RECONNECT HEALTHY SECTION S4\", \"step 3: RECONNECT HEALTHY SECTION S5\"], \"grid_condition_summary\": \"Grid condition: Overload in S3, Normal voltage and frequency, 100% restoration progress, 64.0% served load.\"}",
+  "json_parsed": true,
+  "latency_s": 142.33,
+  "eval_tokens": 201,
+  "context": {
+    "fault_class": "Overload",
+    "cnn_confidence": 0.998,
+    "probabilities": {
+      "Overload": 0.998
+    },
+    "voltage_status": "Normal (219 V)",
+    "current_status": "Overcurrent (21 A, 2.1 pu)",
+    "frequency_status": "Deviation (49.8 Hz)",
+    "affected_section": "S3 (Industrial Load)",
+    "network_status": [
+      "S1: connected",
+      "S3: faulty",
+      "S4: disconnected",
+      "S5: disconnected"
+    ],
+    "dqn_actions": [
+      "step 1: ISOLATE FAULTY SECTION",
+      "step 2: RECONNECT HEALTHY SECTION"
+    ],
+    "safety_results": [
+      "step 1: APPROVED",
+      "step 2: APPROVED"
+    ],
+    "restoration_progress": 1.0,
+    "served_load": 0.64
+  },
+  "generated_at": "2026-11-04 11:06:54"
+}

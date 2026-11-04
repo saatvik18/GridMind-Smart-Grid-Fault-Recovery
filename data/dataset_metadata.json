@@ -1,0 +1,18 @@
+{
+  "created": "2026-11-04 10:50:58",
+  "classes": [
+    "Normal",
+    "Voltage Sag",
+    "Overload",
+    "Fault"
+  ],
+  "samples_per_class": 150,
+  "total_samples": 600,
+  "sampling_frequency_hz": 1000,
+  "duration_s": 0.2,
+  "samples_per_signal": 200,
+  "nominal_frequency_hz": 50.0,
+  "nominal_voltage_rms": 230.0,
+  "nominal_current_rms": 10.0,
+  "seed": 42
+}

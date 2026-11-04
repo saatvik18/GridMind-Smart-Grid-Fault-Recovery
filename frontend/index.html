@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GridMind · Smart Grid Fault Recovery</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="assets/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">⚡</div>
+      <div><div class="brand-name">GridMind</div><div class="brand-sub">CNN · DQN · Llama 3.2</div></div>
+    </div>
+    <nav>
+      <a class="nav-item active" data-view="overview">◉ Overview</a>
+      <a class="nav-item" data-view="simulation">∿ Fault Simulation</a>
+      <a class="nav-item" data-view="spectrogram">▦ Spectrogram</a>
+      <a class="nav-item" data-view="network">⎔ Grid Network</a>
+      <a class="nav-item" data-view="dqn">⟳ DQN Restoration</a>
+      <a class="nav-item" data-view="cnn">◈ CNN Training</a>
+      <a class="nav-item" data-view="comparison">▥ Performance</a>
+      <a class="nav-item" data-view="assistant">✦ AI Assistant</a>
+    </nav>
+    <div class="status-box">
+      <div class="status-row"><span class="dot" id="dot-backend"></span>Backend</div>
+      <div class="status-row"><span class="dot" id="dot-cnn"></span>CNN model</div>
+      <div class="status-row"><span class="dot" id="dot-dqn"></span>DQN agent</div>
+      <div class="status-row"><span class="dot" id="dot-ollama"></span>Ollama llama3.2</div>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <h1 id="view-title">Overview</h1>
+        <div class="subtitle">Intelligent Smart Grid Fault Detection &amp; Autonomous Restoration</div>
+      </div>
+      <div class="live"><span class="pulse"></span><span id="live-status">Idle</span></div>
+    </header>
+
+    <!-- A. OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="cards">
+        <div class="card metric"><div class="label">Grid Operating Status</div><div class="value" id="ov-grid">—</div></div>
+        <div class="card metric"><div class="label">Detected Fault</div><div class="value" id="ov-fault">—</div><div class="hint" id="ov-conf"></div></div>
+        <div class="card metric"><div class="label">CNN Validation Accuracy</div><div class="value" id="ov-acc">—</div></div>
+        <div class="card metric"><div class="label">Served Load</div><div class="value" id="ov-load">—</div><div class="bar"><div id="ov-load-bar"></div></div></div>
+        <div class="card metric"><div class="label">Restoration Stage</div><div class="value small" id="ov-stage">—</div></div>
+        <div class="card metric"><div class="label">DQN Cumulative Reward</div><div class="value" id="ov-reward">—</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><h3>Live Network</h3><canvas id="net-overview" class="net-canvas" height="260"></canvas></div>
+        <div class="card"><h3>Quick Pipeline</h3>
+          <p class="muted">Simulate a disturbance → CNN classifies the spectrogram → DQN restores the grid through the safety layer → Llama 3.2 explains.</p>
+          <div class="btn-row">
+            <button class="btn" data-sim="Normal">Normal</button>
+            <button class="btn" data-sim="Voltage Sag">Voltage Sag</button>
+            <button class="btn" data-sim="Overload">Overload</button>
+            <button class="btn danger" data-sim="Fault">Fault</button>
+          </div>
+          <div class="btn-row"><button class="btn primary" id="btn-pipeline">▶ Run full pipeline (simulate → restore)</button></div>
+          <div class="log" id="event-log"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- B. FAULT SIMULATION -->
+    <section class="view" id="view-simulation">
+      <div class="card">
+        <div class="row-between">
+          <h3>Generate Operating Condition</h3>
+          <label class="muted">Affected section
+            <select id="sim-section"><option value="">Random</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+          </label>
+        </div>
+        <div class="btn-row">
+          <button class="btn" data-sim="Normal">Normal</button>
+          <button class="btn" data-sim="Voltage Sag">Voltage Sag</button>
+          <button class="btn" data-sim="Overload">Overload</button>
+          <button class="btn danger" data-sim="Fault">Fault</button>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="card metric"><div class="label">Simulated Condition</div><div class="value" id="sim-true">—</div></div>
+        <div class="card metric"><div class="label">CNN Detected Class</div><div class="value" id="sim-pred">—</div></div>
+        <div class="card metric"><div class="label">CNN Confidence</div><div class="value" id="sim-conf">—</div></div>
+        <div class="card metric"><div class="label">Signal Status</div><div class="value small" id="sim-status">—</div></div>
+      </div>
+      <div class="card"><h3>Voltage Waveform</h3><div class="chart-box"><canvas id="ch-voltage"></canvas></div></div>
+      <div class="grid-2">
+        <div class="card"><h3>Current Waveform</h3><div class="chart-box"><canvas id="ch-current"></canvas></div></div>
+        <div class="card"><h3>Frequency</h3><div class="chart-box"><canvas id="ch-frequency"></canvas></div></div>
+      </div>
+      <div class="card"><h3>CNN Class Probabilities</h3><div class="chart-box short"><canvas id="ch-probs"></canvas></div></div>
+    </section>
+
+    <!-- C. SPECTROGRAM -->
+    <section class="view" id="view-spectrogram">
+      <div class="card"><h3>Current Signal Spectrogram (CNN input source)</h3>
+        <div class="spec-wrap"><img id="spec-img" alt="Run a simulation to generate a spectrogram" /></div>
+        <p class="muted">Voltage and current are normalised to per-unit, transformed with <code>scipy.signal.spectrogram</code>, log-compressed and resized to a 2×32×32 tensor for the CNN.</p>
+      </div>
+      <div class="card"><h3>Reference Spectrograms (saved)</h3>
+        <div class="gallery" id="spec-gallery"></div>
+      </div>
+    </section>
+
+    <!-- D. GRID NETWORK -->
+    <section class="view" id="view-network">
+      <div class="card">
+        <div class="row-between"><h3>Radial Distribution Feeder</h3>
+          <div class="legend"><span class="lg green"></span>Connected <span class="lg red"></span>Faulty <span class="lg orange"></span>Isolated <span class="lg grey"></span>Disconnected</div>
+        </div>
+        <canvas id="net-main" class="net-canvas" height="380"></canvas>
+      </div>
+      <div class="card"><h3>Section Status</h3><table class="table" id="net-table"></table></div>
+    </section>
+
+    <!-- E. DQN RESTORATION -->
+    <section class="view" id="view-dqn">
+      <div class="card">
+        <div class="btn-row">
+          <button class="btn" id="btn-train-dqn">Train DQN</button>
+          <button class="btn primary" id="btn-restore">Start Restoration</button>
+          <button class="btn" id="btn-baseline">Run Rule-Based</button>
+          <button class="btn" id="btn-reset">Reset Grid</button>
+          <label class="muted">Episodes <input type="number" id="dqn-episodes" value="300" min="10" max="3000" /></label>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="card metric"><div class="label">Episode / Step</div><div class="value" id="dqn-step">—</div></div>
+        <div class="card metric"><div class="label">Selected Action</div><div class="value small" id="dqn-action">—</div></div>
+        <div class="card metric"><div class="label">Step Reward</div><div class="value" id="dqn-reward">—</div><div class="hint" id="dqn-cum"></div></div>
+        <div class="card metric"><div class="label">Safety Validation</div><div class="value small" id="dqn-safety">—</div></div>
+      </div>
+      <div class="card metric"><div class="label">Restoration Progress</div><div class="bar big"><div id="dqn-progress"></div></div><div class="hint" id="dqn-progress-txt"></div></div>
+      <div class="grid-2">
+        <div class="card"><h3>Network State</h3><canvas id="net-dqn" class="net-canvas" height="260"></canvas></div>
+        <div class="card"><h3>Q-Values</h3><div class="chart-box"><canvas id="ch-q"></canvas></div></div>
+      </div>
+      <div class="card"><h3>Restoration Trajectory</h3><table class="table" id="traj-table"></table></div>
+      <div class="card"><h3>DQN Training Reward</h3><div class="chart-box"><canvas id="ch-dqn-reward"></canvas></div></div>
+    </section>
+
+    <!-- F. CNN TRAINING -->
+    <section class="view" id="view-cnn">
+      <div class="card"><div class="btn-row">
+        <button class="btn primary" id="btn-train-cnn">Retrain CNN</button>
+        <label class="muted">Epochs <input type="number" id="cnn-epochs" value="30" min="1" max="200" /></label>
+        <span class="muted" id="cnn-info"></span>
+      </div></div>
+      <div class="cards">
+        <div class="card metric"><div class="label">Training Accuracy</div><div class="value" id="cnn-train-acc">—</div></div>
+        <div class="card metric"><div class="label">Validation Accuracy</div><div class="value" id="cnn-val-acc">—</div></div>
+        <div class="card metric"><div class="label">Final Training Loss</div><div class="value" id="cnn-loss">—</div></div>
+        <div class="card metric"><div class="label">Macro F1</div><div class="value" id="cnn-f1">—</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><h3>Loss</h3><div class="chart-box"><canvas id="ch-cnn-loss"></canvas></div></div>
+        <div class="card"><h3>Accuracy</h3><div class="chart-box"><canvas id="ch-cnn-acc"></canvas></div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><h3>Confusion Matrix (validation)</h3><div id="cm"></div></div>
+        <div class="card"><h3>Classification Report</h3><table class="table" id="cnn-report"></table></div>
+      </div>
+    </section>
+
+    <!-- G. PERFORMANCE COMPARISON -->
+    <section class="view" id="view-comparison">
+      <div class="card"><div class="btn-row">
+        <button class="btn primary" id="btn-evaluate">Re-run Evaluation</button>
+        <span class="muted" id="eval-info"></span>
+      </div></div>
+      <div class="grid-4">
+        <div class="card"><h3>Avg Restoration Steps</h3><div class="chart-box short"><canvas id="cmp-steps"></canvas></div></div>
+        <div class="card"><h3>Avg Served Load (%)</h3><div class="chart-box short"><canvas id="cmp-load"></canvas></div></div>
+        <div class="card"><h3>Invalid Actions</h3><div class="chart-box short"><canvas id="cmp-invalid"></canvas></div></div>
+        <div class="card"><h3>Avg Cumulative Reward</h3><div class="chart-box short"><canvas id="cmp-reward"></canvas></div></div>
+      </div>
+      <div class="card"><h3>Detailed Metrics</h3><table class="table" id="cmp-table"></table></div>
+      <div class="card"><h3>By Fault Type (success rate · avg reward)</h3><table class="table" id="cmp-type"></table></div>
+    </section>
+
+    <!-- H. AI ASSISTANT -->
+    <section class="view" id="view-assistant">
+      <div class="cards">
+        <div class="card metric"><div class="label">Detected Fault</div><div class="value small" id="ai-fault">—</div></div>
+        <div class="card metric"><div class="label">DQN Decision</div><div class="value small" id="ai-dqn">—</div></div>
+        <div class="card metric"><div class="label">Safety Validation</div><div class="value small" id="ai-safety">—</div></div>
+      </div>
+      <div class="card">
+        <div class="row-between">
+          <h3>Llama 3.2 Supervisory Explanation</h3>
+          <button class="btn primary" id="btn-ai">GENERATE AI RESTORATION REPORT</button>
+        </div>
+        <p class="muted">The LLM is advisory only: it explains the fault and decisions but never executes switching actions. The DQN chooses actions; the safety layer approves them.</p>
+        <div id="ai-loading" class="loading hidden"><div class="spinner"></div><span>Llama 3.2 is analysing the grid… (can take 1–3 minutes on CPU)</span></div>
+        <div id="ai-error" class="error hidden"></div>
+        <div id="ai-report" class="report"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<div id="toast" class="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>

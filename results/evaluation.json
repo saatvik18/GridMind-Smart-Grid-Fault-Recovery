@@ -1,0 +1,125 @@
+{
+  "n_episodes": 100,
+  "seed": 49,
+  "evaluated_at": "2026-11-04 16:29:30",
+  "dqn": {
+    "episodes": 100,
+    "avg_restoration_steps": 1.63,
+    "avg_served_load_pct": 86.64285714285715,
+    "avg_progress_pct": 99.82142857142857,
+    "invalid_actions_total": 0,
+    "invalid_action_rate": 0.0,
+    "avg_cumulative_reward": 20.845,
+    "successful_restorations": 99,
+    "success_rate": 0.99
+  },
+  "rule_based": {
+    "episodes": 100,
+    "avg_restoration_steps": 1.52,
+    "avg_served_load_pct": 86.82142857142858,
+    "avg_progress_pct": 100.0,
+    "invalid_actions_total": 0,
+    "invalid_action_rate": 0.0,
+    "avg_cumulative_reward": 21.185714285714283,
+    "successful_restorations": 100,
+    "success_rate": 1.0
+  },
+  "by_fault_type": {
+    "Normal": {
+      "dqn": {
+        "episodes": 27,
+        "avg_restoration_steps": 1.0,
+        "avg_served_load_pct": 100.0,
+        "avg_progress_pct": 100.0,
+        "invalid_actions_total": 0,
+        "invalid_action_rate": 0.0,
+        "avg_cumulative_reward": 9.5,
+        "successful_restorations": 27,
+        "success_rate": 1.0
+      },
+      "rule_based": {
+        "episodes": 27,
+        "avg_restoration_steps": 1.0,
+        "avg_served_load_pct": 100.0,
+        "avg_progress_pct": 100.0,
+        "invalid_actions_total": 0,
+        "invalid_action_rate": 0.0,
+        "avg_cumulative_reward": 9.5,
+        "successful_restorations": 27,
+        "success_rate": 1.0
+      }
+    },
+    "Overload": {
+      "dqn": {
+        "episodes": 33,
+        "avg_restoration_steps": 1.7575757575757576,
+        "avg_served_load_pct": 74.35064935064933,
+        "avg_progress_pct": 100.0,
+        "invalid_actions_total": 0,
+        "invalid_action_rate": 0.0,
+        "avg_cumulative_reward": 23.558441558441558,
+        "successful_restorations": 33,
+        "success_rate": 1.0
+      },
+      "rule_based": {
+        "episodes": 33,
+        "avg_restoration_steps": 1.7575757575757576,
+        "avg_served_load_pct": 74.35064935064933,
+        "avg_progress_pct": 100.0,
+        "invalid_actions_total": 0,
+        "invalid_action_rate": 0.0,
+        "avg_cumulative_reward": 23.558441558441558,
+        "successful_restorations": 33,
+        "success_rate": 1.0
+      }
+    },
+    "Voltage Sag": {
+      "dqn": {
+        "episodes": 22,
+        "avg_restoration_steps": 1.5,
+        "avg_served_load_pct": 99.18831168831167,
+        "avg_progress_pct": 99.18831168831167,
+        "invalid_actions_total": 0,
+        "invalid_action_rate": 0.0,
+        "avg_cumulative_reward": 22.379870129870127,
+        "successful_restorations": 21,
+        "success_rate": 0.9545454545454546
+      },
+      "rule_based": {
+        "episodes": 22,
+        "avg_restoration_steps": 1.0,
+        "avg_served_load_pct": 100.0,
+        "avg_progress_pct": 100.0,
+        "invalid_actions_total": 0,
+        "invalid_action_rate": 0.0,
+        "avg_cumulative_reward": 23.92857142857143,
+        "successful_restorations": 22,
+        "success_rate": 1.0
+      }
+    },
+    "Fault": {
+      "dqn": {
+        "episodes": 18,
+        "avg_restoration_steps": 2.5,
+        "avg_served_load_pct": 73.80952380952381,
+        "avg_progress_pct": 100.0,
+        "invalid_actions_total": 0,
+        "invalid_action_rate": 0.0,
+        "avg_cumulative_reward": 31.01190476190476,
+        "successful_restorations": 18,
+        "success_rate": 1.0
+      },
+      "rule_based": {
+        "episodes": 18,
+        "avg_restoration_steps": 2.5,
+        "avg_served_load_pct": 73.80952380952381,
+        "avg_progress_pct": 100.0,
+        "invalid_actions_total": 0,
+        "invalid_action_rate": 0.0,
+        "avg_cumulative_reward": 31.01190476190476,
+        "successful_restorations": 18,
+        "success_rate": 1.0
+      }
+    }
+  }
+}

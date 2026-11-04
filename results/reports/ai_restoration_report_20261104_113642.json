@@ -1,0 +1,59 @@
+{
+  "model": "llama3.2",
+  "report": {
+    "fault_explanation": "Severe voltage collapse, fault current, and frequency deviation indicate a major fault in section S4.",
+    "possible_causes": [
+      "Overloaded line",
+      "Equipment failure"
+    ],
+    "dqn_action_justification": "DQN action sequence follows safe isolation of faulty section, reconnection of healthy sections, and radial network maintenance.",
+    "safety_considerations": [
+      "Section 5 reconnection via tie switch S1-S5 maintains radiality",
+      "Section 2 reconnection maintains radiality"
+    ],
+    "recommended_restoration_sequence": [
+      "step 1: ISOLATE FAULTY SECTION",
+      "step 2: RECONNECT HEALTHY SECTION",
+      "step 3: RECONNECT HEALTHY SECTION"
+    ],
+    "grid_condition_summary": "Network in severe state; isolation and reconnection of healthy sections maintain radial operation."
+  },
+  "raw_response": "{\"fault_explanation\": \"Severe voltage collapse, fault current, and frequency deviation indicate a major fault in section S4.\", \"possible_causes\": [\"Overloaded line\", \"Equipment failure\"], \"dqn_action_justification\": \"DQN action sequence follows safe isolation of faulty section, reconnection of healthy sections, and radial network maintenance.\", \"safety_considerations\": [\"Section 5 reconnection via tie switch S1-S5 maintains radiality\", \"Section 2 reconnection maintains radiality\"], \"recommended_restoration_sequence\": [\"step 1: ISOLATE FAULTY SECTION\", \"step 2: RECONNECT HEALTHY SECTION\", \"step 3: RECONNECT HEALTHY SECTION\"], \"grid_condition_summary\": \"Network in severe state; isolation and reconnection of healthy sections maintain radial operation.\"}",
+  "json_parsed": true,
+  "latency_s": 113.2,
+  "eval_tokens": 170,
+  "context": {
+    "fault_class": "Fault",
+    "cnn_confidence": 1.0,
+    "probabilities": {
+      "Normal": 0.0,
+      "Voltage Sag": 0.0,
+      "Overload": 0.0,
+      "Fault": 1.0
+    },
+    "voltage_status": "Severe collapse (min 49.3 V RMS, 0.21 pu)",
+    "current_status": "Fault current (max 76.4 A RMS, 7.64 pu)",
+    "frequency_status": "Severe deviation (range 49.60-50.95 Hz)",
+    "affected_section": "S4 (Commercial Load)",
+    "network_status": [
+      "S1 Main Source: connected",
+      "S2 Residential Load: connected",
+      "S3 Industrial Load: connected",
+      "S4 Commercial Load: isolated",
+      "S5 Critical Load: connected"
+    ],
+    "dqn_actions": [
+      "step 1: ISOLATE FAULTY SECTION",
+      "step 2: RECONNECT HEALTHY SECTION",
+      "step 3: RECONNECT HEALTHY SECTION"
+    ],
+    "safety_results": [
+      "step 1: APPROVED - Isolating faulty section 4 removes the fault from the network",
+      "step 2: APPROVED - Section 5 reconnected via switch S1-S5; network stays radial",
+      "step 3: APPROVED - Section 2 reconnected via switch S1-S2; network stays radial"
+    ],
+    "restoration_progress": 1.0,
+    "served_load": 0.75
+  },
+  "generated_at": "2026-11-04 11:36:42"
+}

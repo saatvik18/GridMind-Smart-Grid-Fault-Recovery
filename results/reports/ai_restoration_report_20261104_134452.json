@@ -1,0 +1,60 @@
+{
+  "model": "llama3.2",
+  "report": {
+    "fault_explanation": "Severe voltage collapse, fault current, and frequency deviation indicate a major fault in section S3.",
+    "possible_causes": [
+      "Overload",
+      "Short Circuit"
+    ],
+    "dqn_action_justification": "DQN chose to isolate faulty section 3, reconnect healthy sections, and utilize the tie switch for alternate feed due to high confidence in CNN classification (Fault: 99.9%) and network status.",
+    "safety_considerations": [
+      "Isolating faulty section removes fault from network",
+      "Reconnecting healthy sections maintains radial network topology"
+    ],
+    "recommended_restoration_sequence": [
+      "ISOLATE FAULTY SECTION",
+      "RECONNECT HEALTHY SECTION",
+      "RECONNECT HEALTHY SECTION",
+      "USE TIE SWITCH FOR ALTERNATE FEED"
+    ],
+    "grid_condition_summary": "Network in severe collapse with fault current and frequency deviation; 100% restoration progress, served load at 64.3%"
+  },
+  "raw_response": "{\"fault_explanation\": \"Severe voltage collapse, fault current, and frequency deviation indicate a major fault in section S3.\", \"possible_causes\": [\"Overload\", \"Short Circuit\"], \"dqn_action_justification\": \"DQN chose to isolate faulty section 3, reconnect healthy sections, and utilize the tie switch for alternate feed due to high confidence in CNN classification (Fault: 99.9%) and network status.\", \"safety_considerations\": [\"Isolating faulty section removes fault from network\", \"Reconnecting healthy sections maintains radial network topology\"], \"recommended_restoration_sequence\": [\"ISOLATE FAULTY SECTION\", \"RECONNECT HEALTHY SECTION\", \"RECONNECT HEALTHY SECTION\", \"USE TIE SWITCH FOR ALTERNATE FEED\"], \"grid_condition_summary\": \"Network in severe collapse with fault current and frequency deviation; 100% restoration progress, served load at 64.3%\"}",
+  "json_parsed": true,
+  "latency_s": 138.56,
+  "eval_tokens": 191,
+  "context": {
+    "fault_class": "Fault",
+    "cnn_confidence": 0.9999463558197021,
+    "probabilities": {
+      "Normal": 0.0,
+      "Voltage Sag": 0.0,
+      "Overload": 0.0001,
+      "Fault": 0.9999
+    },
+    "voltage_status": "Severe collapse (min 28.2 V RMS, 0.12 pu)",
+    "current_status": "Fault current (max 48.6 A RMS, 4.86 pu)",
+    "frequency_status": "Severe deviation (range 49.09-50.92 Hz)",
+    "affected_section": "S3 (Industrial Load)",
+    "network_status": [
+      "S1 Main Source: connected",
+      "S2 Residential Load: connected",
+      "S3 Industrial Load: isolated",
+      "S4 Commercial Load: connected",
+      "S5 Critical Load: connected"
+    ],
+    "dqn_actions": [
+      "step 1: ISOLATE FAULTY SECTION",
+      "step 2: RECONNECT HEALTHY SECTION",
+      "step 3: RECONNECT HEALTHY SECTION"
+    ],
+    "safety_results": [
+      "step 1: APPROVED - Isolating faulty section 3 removes the fault from the network",
+      "step 2: APPROVED - Section 5 reconnected via switch S1-S5; network stays radial",
+      "step 3: APPROVED - Section 2 reconnected via switch S1-S2; network stays radial"
+    ],
+    "restoration_progress": 1.0,
+    "served_load": 0.6428571428571429
+  },
+  "generated_at": "2026-11-04 13:44:52"
+}

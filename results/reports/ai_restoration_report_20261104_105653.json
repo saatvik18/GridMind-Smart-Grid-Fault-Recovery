@@ -1,0 +1,60 @@
+{
+  "model": "llama3.2",
+  "report": {
+    "fault_explanation": "Severe voltage collapse and fault current detected in section S4, indicating a major fault event.",
+    "possible_causes": [
+      "Overloaded line",
+      "Equipment failure",
+      "External damage"
+    ],
+    "dqn_action_justification": "DQN chose to isolate faulty section S4 first due to high fault current and severe voltage sag, followed by reconnecting healthy sections to maintain radial stability.",
+    "safety_considerations": [
+      "Section isolation ensures removal of fault from the network",
+      "Reconnecting healthy sections maintains radial stability"
+    ],
+    "recommended_restoration_sequence": [
+      "step 1: ISOLATE FAULTY SECTION S4",
+      "step 2: RECONNECT HEALTHY SECTION S5",
+      "step 3: RECONNECT HEALTHY SECTION S2"
+    ],
+    "grid_condition_summary": "Severe fault event in section S4, with severe voltage collapse and high fault current; restoration progressing with radial stability maintained."
+  },
+  "raw_response": "{\"fault_explanation\": \"Severe voltage collapse and fault current detected in section S4, indicating a major fault event.\", \"possible_causes\": [\"Overloaded line\", \"Equipment failure\", \"External damage\"], \"dqn_action_justification\": \"DQN chose to isolate faulty section S4 first due to high fault current and severe voltage sag, followed by reconnecting healthy sections to maintain radial stability.\", \"safety_considerations\": [\"Section isolation ensures removal of fault from the network\", \"Reconnecting healthy sections maintains radial stability\"], \"recommended_restoration_sequence\": [\"step 1: ISOLATE FAULTY SECTION S4\", \"step 2: RECONNECT HEALTHY SECTION S5\", \"step 3: RECONNECT HEALTHY SECTION S2\"], \"grid_condition_summary\": \"Severe fault event in section S4, with severe voltage collapse and high fault current; restoration progressing with radial stability maintained.\"}",
+  "json_parsed": true,
+  "latency_s": 164.44,
+  "eval_tokens": 190,
+  "context": {
+    "fault_class": "Fault",
+    "cnn_confidence": 0.9999897480010986,
+    "probabilities": {
+      "Normal": 0.0,
+      "Voltage Sag": 0.0,
+      "Overload": 0.0,
+      "Fault": 1.0
+    },
+    "voltage_status": "Severe collapse (min 36.4 V RMS, 0.16 pu)",
+    "current_status": "Fault current (max 57.0 A RMS, 5.70 pu)",
+    "frequency_status": "Severe deviation (range 48.88-51.16 Hz)",
+    "affected_section": "S4 (Commercial Load)",
+    "network_status": [
+      "S1 Main Source: connected",
+      "S2 Residential Load: connected",
+      "S3 Industrial Load: connected",
+      "S4 Commercial Load: isolated",
+      "S5 Critical Load: connected"
+    ],
+    "dqn_actions": [
+      "step 1: ISOLATE FAULTY SECTION",
+      "step 2: RECONNECT HEALTHY SECTION",
+      "step 3: RECONNECT HEALTHY SECTION"
+    ],
+    "safety_results": [
+      "step 1: APPROVED - Isolating faulty section 4 removes the fault from the network",
+      "step 2: APPROVED - Section 5 reconnected via switch S1-S5; network stays radial",
+      "step 3: APPROVED - Section 2 reconnected via switch S1-S2; network stays radial"
+    ],
+    "restoration_progress": 1.0,
+    "served_load": 0.75
+  },
+  "generated_at": "2026-11-04 10:56:53"
+}
